@@ -1,25 +1,23 @@
 import sqlite3
-import pickle
 
 connect = sqlite3.connect('data.db')
 cursor = connect.cursor()
 
-## 테이블 HOTITEMS
+## 테이블 SHOP
 try:
-  table = 'hotItems' # 테이블 이름
+  table = 'shop' # 테이블 이름
   cursor.execute('''DROP TABLE %s ''' % table)
 except:
   pass
 
 try:
-  cursor.execute('''CREATE TABLE hotItems (name text, image bin)''')
+  cursor.execute('''CREATE TABLE shop (name text, lat real, lng real)''')
   print('Created %s' % table)
-  file = open('./assets/images/hotItems_adidasSpectralMode.png', 'rb')
-  with file:
-      data = file.read()
-  cursor.execute("INSERT INTO hotItems VALUES ('Adidas Spectral Mode', ?)", [sqlite3.Binary(data)])
+  cursor.execute("INSERT INTO shop VALUES ('Mediapia', 37.584708, 126.984830)")
+  cursor.execute("INSERT INTO shop VALUES ('Ssaka', 37.566166, 127.006100)")
+  cursor.execute("INSERT INTO shop VALUES ('Kisan sports', 37.577352, 127.015016)")
+  cursor.execute("INSERT INTO shop VALUES ('Nike Capo', 37.565372, 127.009225)")
   connect.commit()
-  file.close()
   print('Data Inserted into %s' % table)
 except:
   raise
